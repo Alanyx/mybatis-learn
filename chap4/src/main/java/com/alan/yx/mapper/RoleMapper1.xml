@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--4.2.4 传递多个参数-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alan.yx.mapper.RoleMapper">
+    <!--0.简易数据类型-->
+    <select id="countFirstName" parameterType="String" resultType="int">
+        SELECT count(*) AS total FROM t_role WHERE name like '%${firstName}%'
+    </select>
+
+    <!--1.使用 Map 传递参数：【可读性和扩展性差，废弃】-->
+    <select id="findRoleByMap" parameterType="Map" resultMap="roleMap">
+         SELECT id,role_name,note FROM t_role WHERE role_name LIKE '%${roleName}%' AND note not LIKE '%${note}%'
+    </select>
+
+    <!--2.使用注解传递参数-->
+    <select id="findRoleByNameAndNote" resultType="roleMap">
+        SELECT id,role_name,note FROM t_role WHERE role_name LIKE '%${roleName}%' AND note not LIKE '%${note}%'
+    </select>
+
+    <!--3.使用 JavaBean 传递参数-->
+    <select id="findRoleByParams" parameterType="com.alan.yx.javaBean.RoleParam"
+            resultMap="roleMap">
+         SELECT id,role_name,note FROM t_role WHERE role_name LIKE '%${roleName}%' AND note not LIKE '%${note}%'
+    </select>
+</mapper>
+

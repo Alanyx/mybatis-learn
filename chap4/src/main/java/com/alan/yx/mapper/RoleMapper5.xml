@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--4.5 参数-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alan.yx.mapper.RoleMapper">
+    <!--4.5.1 参数配置-->
+    <!--1.可以指定特定的参数类型-->
+    #{age,javaType=int,jdbcType=NUMERIC}
+    <!--2.指定使用哪个 typeHandler 处理-->
+    #{age,javaType=int,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
+    <!--3.对一些数值型的参数设置其保存精度-->
+    #{age,javaType=int,jdbcType=NUMERIC,numericScale=2}
+
+
+    <!--4.5.2 存储过程支持-->
+    <!--1.存储过程存在三种参数: 输入参数(IN)、输出参数(OUT)、输入输出参数(INOUT); 指定 mode 属性确定参数-->
+    #{role,mode=OUT,jdbcType=CURSOR,javaType=ResultMap,resultMap=roleResultMap}
+    <!--备注: CURSOR 为游标-->
+    <!--2.支持一些高级特性:如结构体，注册参数时需要指定语句类型的名称(jdbcTypeName)-->
+    #{role,mode=OUT,jdbcType=STRUCT,jdbcTypeName=MY_TYPE,resultMap=roleResultMap}
+    <!--3.大部分情况下 mybatis 会推断你返回数据类型====》需要我们设置的只有可能返回为空的字段类型-->
+    #{id},#{roleName},#{note,jdbcType=VARCHAR}
+    <!--jdbcType=VARCHAR 明确告知 mybatis 让它被 StringTypeHandler 处理-->
+
+    <!--4.5.3 特殊字符串替换和处理(#和$)-->
+    <!--1.参数 #{paramName} 在大部分情况下 mybatis 会用创建预编译的语句，然后设值-->
+    <!--2. 有时传递 SQL 语句本身，而不是参数，如程序中传递变量 columns="co1,co2,co3"-->
+    select ${columns} from t_role
+    <!--上面 ${} mybatis 不会帮我们转译 columns,而不是作为参数，
+         注意这样对 SQL 不安全，需要主键保证正确性和安全性-->
+
+</mapper>
+

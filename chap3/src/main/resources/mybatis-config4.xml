@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--typeAlias 配置-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <!--1.系统定义别名-->
+        <!--2.自定义别名1：使用 role 代替全路径-->
+        <typeAlias alias="role" type="com.alan.yx.entity.Role"/>
+        <!--2.自定义别名2：通过自动扫描 + @Alias 注解-->
+        <package name="com.alan.yx.entity"/>
+    </typeAliases>
+</configuration>

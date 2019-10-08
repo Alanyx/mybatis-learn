@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--4.6 sql 元素-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alan.yx.mapper.RoleMapper">
+    <!--作用:定义 一串 sql 语句的组成部分，其他语句可以通过引用来复用-->
+    <!--1.使用示例-->
+    <sql id="role_columns">
+        id,role_name,note
+    </sql>
+    <select id="getRole" resultMap="roleMap" parameterType="long">
+        SELECT
+        <include refid="role_columns"/>
+        FROM t_role WHERE id=#{id}
+    </select>
+
+    <!--2.指定参数-->
+    <sql id="role_columns2">
+        #{prefix}.id, #{prefix}role_name, #{prefix}note
+    </sql>
+    <select id="getRole2" resultMap="roleResultMap" parameterType="string">
+        SELECT
+        <include refid="role_columns2">
+            <property name="prefix" value="r"/>
+        </include>
+        FROM t_role WHERE id=#{id}
+    </select>
+
+    <!--3.使用 refid-->
+    <sql id="some_include">
+       SELECT * FROM <include refid="${tableName}"/>
+    </sql>
+</mapper>
+

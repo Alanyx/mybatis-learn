@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--4.7 result 结果映射-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alan.yx.mapper.RoleMapper">
+    <!--4.7.2 使用 map 存储结果集[可读性差，不推荐]-->
+    <select id="findColorByNote" parameterType="string" resultType="map">
+        select id,color,note from t_color WHERE note like concat('%',#{note},'%')
+    </select>
+
+    <!--4.7.3 使用 pojo 存储结果集-->
+    <resultMap id="roleResultMap" type="com.alan.yx.entity.Role">
+        <!--id 属性为主键-->
+        <id property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="note" column="note"/>
+    </resultMap>
+
+    <select id="getRole" parameterType="long" resultType="roleResultMap">
+        SELECT id,role_name,note FROM t_role WHERE id = #{id}
+    </select>
+
+    <!--4.7.4 级联-->
+    <!--association: 一对一-->
+    <!--collection: 一对多-->
+    <!-- discriminator: 鉴别器-->
+</mapper>
+

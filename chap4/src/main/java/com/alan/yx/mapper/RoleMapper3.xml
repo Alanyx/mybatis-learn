@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--4.3 insert 元素-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alan.yx.mapper.RoleMapper">
+    <!--1.简单使用-->
+    <insert id="insertRole" parameterType="role">
+        INSERT INTO t_role(role_name,note) VALUES (#{roleName},#{note})
+    </insert>
+
+    <!--2.插入后自动返回主键-->
+    <insert id="insertRole2" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_role(role_name,note) VALUES (#{roleName},#{note})
+    </insert>
+
+    <!--3.使用自定义主键生成规则:如没有 id 则为1，否则使用最大 id 加2-->
+    <insert id="insertRole3" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT if(max(id) is null,1,max(id) +2) as newId FROM t_role
+        </selectKey>
+        INSERT INTO t_role(role_name,note) VALUES (#{roleName},#{note})
+    </insert>
+</mapper>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--定义别名-->
+    <typeAliases>
+        <typeAlias alias="role" type="com.alan.yx.entity.Role"/>
+    </typeAliases>
+    <!--引入配置文件: 方便日后重复使用和维护-->
+    <properties resource="jdbc.properties"/>
+    <!--定义数据库信息，默认使用 development 数据库构建环境-->
+    <environments default="development">
+        <environment id="development">
+            <!--采用 jdbc 事务管理-->
+            <transactionManager type="JDBC">
+                <property name="autocommit" value="false"/>
+            </transactionManager>
+            <!--配置数据库连接信息-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--定义映射器-->
+    <mappers>
+        <mapper resource="com/alan/yx/mapper/RoleMapper.xml"/>
+    </mappers>
+
+</configuration>
